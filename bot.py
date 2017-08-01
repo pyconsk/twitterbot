@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import tweepy, time, itertools
-
+# EXAMPLE_KEY
 CONSUMER_KEY = 'EXAMPLE_KEY'
 CONSUMER_SECRET = 'EXAMPLE_KEY'
 ACCESS_KEY = 'EXAMPLE_KEY'
@@ -10,8 +10,8 @@ ACCESS_SECRET = 'EXAMPLE_KEY'
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, compression=True)
-ignored_accounts = ["pyconsk"]
-hashtag = "#PyconSK"
+ignored_accounts = ["pyconsk", "Fl4shpower"]
+hashtag = "#pyconskba"
 number_of_tweets = 1000
 
 
@@ -82,6 +82,13 @@ def follow_user(users_to_follow):
         print("OK Following User: ", str(user))
         time.sleep(10)
 
+# Make unfollowing
+def unfollow_user(users_to_unfollow):
+    print("\nFollowing Users...\n")
+    for user in users_to_unfollow:
+        api.destroy_friendship(screen_name=user)
+        print("OK Unfollowing User: ", str(user))
+        time.sleep(10)
 
 try:
     existing_followings = existing_followings()
@@ -92,7 +99,10 @@ try:
     print("\nusers_with_tweets :", len(users_with_tweets), "\n", users_with_tweets)
     users_to_follow = (users_with_tweets - (existing_followers.union(existing_followings)))
     print("\nusers_to_follow :", len(users_to_follow), "\n", users_to_follow)
-    follow_user(users_to_follow)
+    # follow_user(users_to_follow)
+    users_to_unfollow = existing_followings - existing_followers
+    print("\nusers_to_unfollow :", len(users_to_unfollow), "\n", users_to_unfollow)
+    unfollow_user(users_to_unfollow)
     print("\nDone...")
 
 except tweepy.TweepError as e:

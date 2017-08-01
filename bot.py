@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import tweepy, time, itertools
-# EXAMPLE_KEY
+
 CONSUMER_KEY = 'EXAMPLE_KEY'
 CONSUMER_SECRET = 'EXAMPLE_KEY'
 ACCESS_KEY = 'EXAMPLE_KEY'

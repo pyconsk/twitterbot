@@ -82,13 +82,6 @@ def follow_user(users_to_follow):
         print("OK Following User: ", str(user))
         time.sleep(10)
 
-# Make unfollowing
-def unfollow_user(users_to_unfollow):
-    print("\nFollowing Users...\n")
-    for user in users_to_unfollow:
-        api.destroy_friendship(screen_name=user)
-        print("OK Unfollowing User: ", str(user))
-        time.sleep(10)
 
 try:
     existing_followings = existing_followings()
@@ -99,10 +92,7 @@ try:
     print("\nusers_with_tweets :", len(users_with_tweets), "\n", users_with_tweets)
     users_to_follow = (users_with_tweets - (existing_followers.union(existing_followings)))
     print("\nusers_to_follow :", len(users_to_follow), "\n", users_to_follow)
-    # follow_user(users_to_follow)
-    users_to_unfollow = existing_followings - existing_followers
-    print("\nusers_to_unfollow :", len(users_to_unfollow), "\n", users_to_unfollow)
-    unfollow_user(users_to_unfollow)
+    follow_user(users_to_follow)
     print("\nDone...")
 
 except tweepy.TweepError as e:

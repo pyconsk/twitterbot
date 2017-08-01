@@ -10,7 +10,7 @@ ACCESS_SECRET = 'EXAMPLE_KEY'
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, compression=True)
-ignored_accounts = ["pyconsk", "Fl4shpower"]
+ignored_accounts = ["pyconsk"]
 hashtag = "#pyconskba"
 number_of_tweets = 1000
 

@@ -38,7 +38,8 @@ def existing_followings():
             # print(result.screen_name) # For Debugging
             existing_followings.add(result.screen_name)
 
-        time.sleep(10)
+        print("Requesting 100 followings....")
+        time.sleep(5)
 
     return existing_followings
 
@@ -55,9 +56,11 @@ def existing_followers():
             # print(result.screen_name) # For Debugging
             existing_followers.add(result.screen_name)
 
-        time.sleep(10)
+        print("Requesting 100 followers....")
+        time.sleep(5)
 
     return existing_followers
+
 
 # Find Users with tweets with searching hashtag
 def users_with_tweets():
@@ -83,6 +86,15 @@ def follow_user(users_to_follow):
         time.sleep(10)
 
 
+# Make unfollowing
+def unfollow_user(users_to_unfollow):
+    print("\nFollowing Users...\n")
+    for user in users_to_unfollow:
+        api.destroy_friendship(screen_name=user)
+        print("OK Unfollowing User: ", str(user))
+        time.sleep(5)
+
+
 try:
     existing_followings = existing_followings()
     print("\nexisting_followings :", len(existing_followings), "\n", existing_followings)
@@ -93,6 +105,10 @@ try:
     users_to_follow = (users_with_tweets - (existing_followers.union(existing_followings)))
     print("\nusers_to_follow :", len(users_to_follow), "\n", users_to_follow)
     follow_user(users_to_follow)
+    # users_to_unfollow = existing_followings - existing_followers
+    # print("\nusers_to_unfollow :", len(users_to_unfollow), "\n", users_to_unfollow)
+    # unfollow_user(users_to_unfollow)
+
     print("\nDone...")
 
 except tweepy.TweepError as e:

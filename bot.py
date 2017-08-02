@@ -38,7 +38,7 @@ def existing_followings(pagination, sleep):
             # print(result.screen_name) # For Debugging
             existing_followings.add(result.screen_name)
 
-        print("Requesting 100 followings....")
+        print("Requesting 100 followings")
         time.sleep(sleep)
 
     return existing_followings
@@ -56,7 +56,7 @@ def existing_followers(pagination, sleep):
             # print(result.screen_name) # For Debugging
             existing_followers.add(result.screen_name)
             
-        print("Requesting 100 followers....")
+        print("Requesting 100 followers")
         time.sleep(sleep)
 
     return existing_followers
@@ -88,7 +88,7 @@ def follow_user(users_to_follow, sleep):
 
 # Make unfollowing
 def unfollow_user(users_to_unfollow, sleep):
-    print("\nFollowing Users...\n")
+    print("\nUnfollowing Users...\n")
     for user in users_to_unfollow:
         api.destroy_friendship(screen_name=user)
         print("OK Unfollowing User: ", str(user))

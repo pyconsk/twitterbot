@@ -81,8 +81,11 @@ def users_with_tweets():
 def follow_user(users_to_follow, sleep):
     print("\nFollowing Users...\n")
     for user in users_to_follow:
-        api.create_friendship(screen_name=user)
-        print("OK Following User: ", str(user))
+        try:
+            api.create_friendship(screen_name=user)
+            print("OK Following User: ", str(user))
+        except:
+            pass
         time.sleep(sleep)
 
 

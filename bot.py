@@ -102,8 +102,8 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-a', '--action', type=str, required=True, choices=['follow', 'unfollow'],
-                        help='Action - follow | unfollow')
+    parser.add_argument('-a', '--action', type=str, required=True, choices=['follow', 'unfollow', 'follow_followers'],
+                        help='Action - follow | unfollow | follow_followers')
     parser.add_argument('-p', '--pagination', type=int, default=100, help='Listing pagination')
     parser.add_argument('-s', '--sleep', type=int, default=10, help='Sleep time for function')
     parser.add_argument('--version', action='version', version='%(prog)s 1.0')
@@ -120,6 +120,10 @@ if __name__ == '__main__':
             users_with_tweets = users_with_tweets()
             print("\nusers_with_tweets :", len(users_with_tweets), "\n", users_with_tweets)
             users_to_follow = (users_with_tweets - (existing_followers.union(existing_followings)))
+            print("\nusers_to_follow :", len(users_to_follow), "\n", users_to_follow)
+            follow_user(users_to_follow, sleep)
+        elif action =='follow_followers':
+            users_to_follow = existing_followers - existing_followings
             print("\nusers_to_follow :", len(users_to_follow), "\n", users_to_follow)
             follow_user(users_to_follow, sleep)
         else:

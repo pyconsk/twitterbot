@@ -98,19 +98,29 @@ def unfollow_user(users_to_unfollow, sleep):
         time.sleep(sleep)
 
 
+# Send private message to followers
+def send_private_message(existing_followers, sleep, pm):
+    for user in existing_followers:
+        api.send_direct_message(user, text=pm)
+        time.sleep(sleep)
+
+
 if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-a', '--action', type=str, required=True, choices=['follow', 'unfollow', 'follow_followers'],
-                        help='Action - follow | unfollow | follow_followers')
+    parser.add_argument('-a', '--action', type=str, required=True, choices=['follow', 'unfollow', 'follow_followers',
+                                                                            'pm'],
+                        help='Action - follow | unfollow | follow_followers | pm')
     parser.add_argument('-p', '--pagination', type=int, default=100, help='Listing pagination')
     parser.add_argument('-s', '--sleep', type=int, default=10, help='Sleep time for function')
     parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+    parser.add_argument('--pm', type=str, help='pm - message to followers')
     args = parser.parse_args()
     sleep = args.sleep
     action = args.action
     pagination = args.pagination
+    pm = args.pm
     try:
         existing_followings = existing_followings(pagination, sleep)
         print("\nexisting_followings :", len(existing_followings), "\n", existing_followings)
@@ -126,6 +136,11 @@ if __name__ == '__main__':
             users_to_follow = existing_followers - existing_followings
             print("\nusers_to_follow :", len(users_to_follow), "\n", users_to_follow)
             follow_user(users_to_follow, sleep)
+        elif action == 'pm':
+            if pm:
+                send_private_message(existing_followers, sleep, pm)
+            else:
+                print("\nPlease specify message which should be sent to followers. Use --pm 'text zpravy'")
         else:
             users_to_unfollow = existing_followings - existing_followers
             print("\nusers_to_unfollow :", len(users_to_unfollow), "\n", users_to_unfollow)

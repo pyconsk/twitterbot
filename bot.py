@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import tweepy, time, itertools
+from keys import keys
 
-CONSUMER_KEY = 'EXAMPLE_KEY'
-CONSUMER_SECRET = 'EXAMPLE_KEY'
-ACCESS_KEY = 'EXAMPLE_KEY'
-ACCESS_SECRET = 'EXAMPLE_KEY'
+CONSUMER_KEY = keys['CONSUMER_KEY']
+CONSUMER_SECRET = keys['CONSUMER_SECRET']
+ACCESS_KEY = keys['ACCESS_KEY']
+ACCESS_SECRET = keys['ACCESS_SECRET']
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, compression=True)
@@ -101,7 +102,7 @@ def unfollow_user(users_to_unfollow, sleep):
 # Send private message to followers
 def send_private_message(existing_followers, sleep, pm):
     for user in existing_followers:
-        api.send_direct_message(user, text=pm)
+        api.send_direct_message(user, text=pm.replace('\\n', '\n'))
         time.sleep(sleep)
 
 
@@ -121,6 +122,7 @@ if __name__ == '__main__':
     action = args.action
     pagination = args.pagination
     pm = args.pm
+    print(type(pm))
     try:
         existing_followings = existing_followings(pagination, sleep)
         print("\nexisting_followings :", len(existing_followings), "\n", existing_followings)
